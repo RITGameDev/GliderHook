@@ -5,6 +5,9 @@ public class Grapple : MonoBehaviour
 {
     public float maxDistance = 1000;
     public float maxRetractionForce;
+    public float minDistance = 100;
+    public float force = 100;
+    public float forceYscale;
     public float sprint;
     public float dampaning;
     ConfigurableJoint joint;
@@ -40,44 +43,31 @@ public class Grapple : MonoBehaviour
         else
         {
             grapleCable.transform.position = Vector3.down * 1000;
-            if (Input.GetMouseButtonDown(0))
+            
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (joint)
             {
-                RaycastHit hit;
-                if (Physics.Raycast(look.position, look.forward, out hit, 290, grappleMask))
-                {
-                    NewAttachmentPoint(hit);
-                }
+                Destroy(joint);
+            }
+            RaycastHit hit;
+            if (Physics.Raycast(look.position, look.forward, out hit, maxDistance, grappleMask))
+            {
+                NewAttachmentPoint(hit);
             }
         }
     }
 
     void FixedUpdate()
     {
-        SoftJointLimit limit;
-        if (joint && (transform.position - joint.connectedAnchor).magnitude < joint.linearLimit.limit)
-        {
-            limit = joint.linearLimit;
-            limit.limit = (joint.connectedAnchor - transform.position).magnitude;
-            //joint.linearLimit = limit;
-        }
         if (joint)
         {
-            limit = joint.linearLimit;
-            limit.limit = Mathf.Clamp((joint.connectedAnchor - transform.position).magnitude - (retractionRate * Time.deltaTime),0, 300);
-            //joint.linearLimit = limit;
-
-            if (limit.limit < 5)
-            {
-                Destroy(joint);
-            }
+            rigidbody.AddForce(grapleCable.forward * force);
         }
-        if (joint && Input.GetMouseButtonDown(1))
+        if (joint && (Input.GetMouseButtonDown(1) || (transform.position - joint.connectedAnchor).magnitude < minDistance))
         {
             Destroy(joint);
-        }
-        if (joint)
-        {
-            Debug.Log(joint.linearLimit.limit);
         }
     }
 
@@ -89,21 +79,14 @@ public class Grapple : MonoBehaviour
         }
         joint = gameObject.AddComponent<ConfigurableJoint>();
         joint.autoConfigureConnectedAnchor = false;
-        joint.connectedAnchor = hit.point;// transform.InverseTransformPoint(hit.point);
+        joint.connectedAnchor = hit.point;
         joint.xMotion = ConfigurableJointMotion.Limited;
         joint.yMotion = ConfigurableJointMotion.Limited;
         joint.zMotion = ConfigurableJointMotion.Limited;
         worldAnchorPosition = hit.point;
         SoftJointLimit limit = joint.linearLimit;
-        limit.limit = 300;// (hit.point - transform.position).magnitude;
+        limit.limit = maxDistance;
         joint.linearLimit = limit;
-        JointDrive jdrive = joint.xDrive;
-        jdrive.maximumForce = 400;
-        jdrive.positionDamper = 3f;
-        jdrive.positionSpring = 100;
-        joint.xDrive = jdrive;
-        joint.yDrive = jdrive;
-        joint.zDrive = jdrive;
         SoftJointLimitSpring spring = joint.linearLimitSpring;
         spring.spring = 100;
         joint.linearLimitSpring = spring;

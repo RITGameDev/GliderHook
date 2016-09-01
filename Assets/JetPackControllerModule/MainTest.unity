@@ -101,6 +101,8 @@ GameObject:
   - 54: {fileID: 140411438}
   - 136: {fileID: 140411437}
   - 114: {fileID: 140411436}
+  - 114: {fileID: 140411440}
+  - 114: {fileID: 140411441}
   m_Layer: 0
   m_Name: RigidBodyFPSController
   m_TagString: Untagged
@@ -211,6 +213,40 @@ Transform:
   - {fileID: 741517471}
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &140411440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 140411435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db9c3f9fd490d1d469a26c349182f01a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upForce: 10000
+  startingFuel: 10
+  maxFuel: 10
+  regenerationRate: 5
+  burnRate: 2
+  zBurnRate: 1
+  zForce: 10000
+  xBurnRate: 1
+  xForce: 10000
+  activatedDragDelta: 3
+  fuel: 0
+--- !u!114 &140411441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 140411435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604b995db02552144a8b2c5194ec1772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setLockTo: 1
 --- !u!1 &610677789
 GameObject:
   m_ObjectHideFlags: 0

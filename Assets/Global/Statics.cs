@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public delegate float FloatyInput(float sensetivity);
+public delegate bool BoolControl();
+
 public static class Statics {
 
 	public static void SetCursorLock(bool locked)

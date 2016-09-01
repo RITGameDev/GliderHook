@@ -88,9 +88,6 @@ namespace UnityStandardAssets.Vehicles.Aeroplane
             CalculateTorque();
 
             CalculateAltitude();
-            Debug.Log("Velocity Mag:" + GetComponent<Rigidbody>().velocity.magnitude +
-                "  Height: " + transform.position.y +
-                " Y Velocity:" + GetComponent<Rigidbody>().velocity.y);
         }
 
 

@@ -12,6 +12,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public float distanceStep = 1f;
     public float xSensativity = 1f;
     public float ySensativity = 1f;
+    public float upOffSet = 2f;
 
     protected FloatyInput xInput;
     protected FloatyInput yInput;
@@ -68,7 +69,7 @@ public class ThirdPersonCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = target.position;
+        transform.position = target.position + Vector3.up * upOffSet;
         lastRotation.z = 0;
 
         //stupid x => y conversion here because of how unity has its axis setup for 2D vs 3D

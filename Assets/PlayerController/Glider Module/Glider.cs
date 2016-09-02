@@ -97,8 +97,7 @@ public class Glider : MonoBehaviour {
         float speed = rb.velocity.magnitude;
         Vector3 newVelocity = transform.forward * speed;
         float maxDis = speedVsmaxVelocityDelta.Evaluate(speed) * Time.fixedDeltaTime;
-        Debug.Log("Slip Speed: " + (speed-Vector3.Project(rb.velocity, transform.forward).magnitude) + " Speed: " + speed + " Speed Along Forwards" + 
-            Vector3.Project(rb.velocity,transform.forward).magnitude + " Speed Delta: " + speedVsmaxVelocityDelta.Evaluate(speed) + "Velocity: " + rb.velocity);
+        //Debug.Log("Slip Speed: " + (speed-Vector3.Project(rb.velocity, transform.forward).magnitude) + " Speed: " + speed + " Speed Along Forwards" + Vector3.Project(rb.velocity,transform.forward).magnitude + " Speed Delta: " + speedVsmaxVelocityDelta.Evaluate(speed) + "Velocity: " + rb.velocity);
         if (maxDis >= Vector3.Distance(newVelocity, rb.velocity))
         {
             //newVelocity = rb.velocity;
@@ -123,7 +122,6 @@ public class Glider : MonoBehaviour {
         Vector3 reletiveTarget = transform.InverseTransformDirection(cameraTransform.forward).normalized;
         if (roll == 0f)
         {
-            Vector3 oldForward = transform.forward;
             Quaternion oldRotation = transform.rotation;
             transform.rotation = Quaternion.LookRotation(transform.forward);
             reletiveTarget = transform.InverseTransformDirection(cameraTransform.forward).normalized;

@@ -6,12 +6,10 @@ public class ReturnToMainMenu : MonoBehaviour
 {
     private bool m_Levelloaded;
 
-
     public void Start()
     {
         DontDestroyOnLoad(this);
     }
-
 
     private void OnLevelWasLoaded(int level)
     {
@@ -29,7 +27,6 @@ public class ReturnToMainMenu : MonoBehaviour
             m_Levelloaded = false;
         }
     }
-
 
     public void GoBackToMainMenu()
     {

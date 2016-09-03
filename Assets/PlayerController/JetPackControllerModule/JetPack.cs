@@ -3,7 +3,8 @@ using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController))]
-public class JetPack : MonoBehaviour {
+public class JetPack : MonoBehaviour
+{
 
     public float upForce = 10f;
     public float startingFuel = 10f;
@@ -15,23 +16,25 @@ public class JetPack : MonoBehaviour {
     public float xBurnRate = 1f;
     public float xForce = 100f;
     public float activatedDragDelta = 3f;
+    public ParticleSystem particleSys;
 
     protected FloatyInput xInput;
     protected FloatyInput zInput;
     protected BoolControl activeInput;
+    protected bool particlesActive = true;
 
-    public float fuel;
+    protected float fuel;
     protected UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController controller;
     protected Rigidbody rb;
     protected float lastDragDelta = 0f;
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         fuel = startingFuel;
         controller = GetComponent<UnityStandardAssets.Characters.FirstPerson.RigidbodyFirstPersonController>();
         rb = GetComponent<Rigidbody>();
         SetupInputDelegates();
-	}
+    }
 
     #region SetupInputs
     void SetupInputDelegates()
@@ -44,7 +47,7 @@ public class JetPack : MonoBehaviour {
         {
             zInput = GetZInput;
         }
-        if(activeInput == null)
+        if (activeInput == null)
         {
             activeInput = GetActiveationInput;
         }
@@ -85,26 +88,41 @@ public class JetPack : MonoBehaviour {
     #endregion
 
     // Update is called once per frame
-    void FixedUpdate ()
+    void FixedUpdate()
     {
-        if(!controller.Grounded && activeInput() && fuel > 0)
+        if (!controller.Grounded && activeInput() && fuel > 0)
         {
-            rb.AddForce(transform.up*upForce*Time.fixedDeltaTime);
-            fuel -= burnRate * Time.fixedDeltaTime;
+            float burnFactor = 1f;
+            if(fuel < burnRate * Time.fixedDeltaTime)
+            {
+                burnFactor = fuel / burnRate * Time.fixedDeltaTime;
+            }
+            fuel -= burnRate * Time.fixedDeltaTime * burnFactor;
+            rb.AddForce(transform.up * upForce * burnFactor * Time.fixedDeltaTime);
             rb.drag += activatedDragDelta - lastDragDelta;
             lastDragDelta = activatedDragDelta;
+            if (!particlesActive)
+            {
+                particleSys.Play();
+                particlesActive = true;
+            }
         }
         else
         {
             rb.drag -= lastDragDelta;
             lastDragDelta = 0f;
+            if (particlesActive)
+            {
+                particleSys.Stop();
+                particlesActive = false;
+            }
         }
         if (!controller.Grounded && fuel > 0)
         {
             float zInputVal = zInput(1);
             float xInputVal = xInput(1);
             fuel -= zBurnRate * Mathf.Abs(zInputVal) * Time.fixedDeltaTime;
-            Vector3 forwards = controller.cam.transform.forward + controller.cam.transform.up *.01f;
+            Vector3 forwards = controller.cam.transform.forward + controller.cam.transform.up * .01f;
             forwards.y = 0;
             forwards = forwards.normalized;
             rb.AddForce(forwards * zForce * zInputVal * Time.fixedDeltaTime);
@@ -114,5 +132,10 @@ public class JetPack : MonoBehaviour {
 
         fuel += regenerationRate * Time.fixedDeltaTime;
         fuel = Mathf.Min(fuel, maxFuel);
-	}
+    }
+
+    public void OnGUI()
+    {
+        Statics.DisplayInfo("Fuel: " + fuel.ToString("0.0"),2);
+    }
 }

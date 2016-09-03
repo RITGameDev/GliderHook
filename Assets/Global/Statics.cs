@@ -19,4 +19,10 @@ public static class Statics {
             Cursor.visible = true;
         }
     }
+
+    public static void DisplayInfo(string info,int area)
+    {
+        GUI.color = Color.black;
+        GUI.Label(new Rect(10, area * 30, 200, 20), info);
+    }
 }

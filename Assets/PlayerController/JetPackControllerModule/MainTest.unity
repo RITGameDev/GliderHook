@@ -182,7 +182,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013613495062, guid: 0787055c6e125ea4bbc216b9ff73fc69, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.53
+      value: 4.94
       objectReference: {fileID: 0}
     - target: {fileID: 4000013613495062, guid: 0787055c6e125ea4bbc216b9ff73fc69, type: 2}
       propertyPath: m_LocalPosition.z
@@ -377,3 +377,4 @@ MonoBehaviour:
   distanceStep: 1
   xSensativity: 1
   ySensativity: 1
+  upOffSet: 2

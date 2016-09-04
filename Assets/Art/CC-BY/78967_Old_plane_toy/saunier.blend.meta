@@ -410,6 +410,8 @@ ModelImporter:
     2300260: Plane_004_MeshPart99
     2300262: plinthe
     2300264: Torus_001
+    2300266: aile
+    2300268: Plane_004
     3300000: aile_MeshPart0
     3300002: aile_MeshPart1
     3300004: Circle
@@ -543,6 +545,8 @@ ModelImporter:
     3300260: Plane_004_MeshPart99
     3300262: plinthe
     3300264: Torus_001
+    3300266: aile
+    3300268: Plane_004
     4300000: Plane
     4300002: papier_peint_001
     4300004: plinthe
@@ -676,6 +680,8 @@ ModelImporter:
     4300260: Plane_004_MeshPart100
     4300262: Plane_004_MeshPart101
     4300264: Plane_004_MeshPart102
+    4300266: aile
+    4300268: Plane_004
     7400000: Default Take
     9500000: //RootNode
   materials:

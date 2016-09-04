@@ -25,4 +25,15 @@ public static class Statics {
         GUI.color = Color.black;
         GUI.Label(new Rect(10, area * 30, 200, 20), info);
     }
+
+    public static Vector3 VelocityTurn(Vector3 startingVelocity, Vector3 targetDirection, float maxChangeAngle)
+    {
+        targetDirection = targetDirection.normalized * startingVelocity.magnitude;
+        float angle = Vector3.Angle(startingVelocity, targetDirection);
+        if(angle < maxChangeAngle)
+        {
+            return targetDirection;
+        }
+        return Vector3.Slerp(startingVelocity, targetDirection, maxChangeAngle / angle);
+    }
 }
